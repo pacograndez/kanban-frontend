@@ -1,0 +1,99 @@
+<mat-toolbar>
+  <span>Tablero Kanban</span>
+  <span class="spacer"></span>
+  <button mat-icon-button aria-label="Example icon-button with share icon" (click)="onLogout()">
+    <span class="material-symbols-outlined">
+      logout
+    </span>
+  </button>
+</mat-toolbar>
+
+<div class="tasks-container">
+  <mat-card class="tasks-card">
+    <mat-card-header>
+      <mat-card-title>Tareas Pendientes</mat-card-title>
+      <div class="spacer"></div>
+      <button mat-icon-button color="primary" (click)="onAddTask()">
+        <mat-icon>add</mat-icon>
+      </button>
+    </mat-card-header>
+
+    <mat-card-content>
+      @if (pendingTasks().length === 0) {
+      <p class="no-tasks">No hay tareas pendientes.</p>
+      } @else {
+      <mat-list>
+        @for (task of pendingTasks(); track task.id) {
+        <mat-list-item>
+          <mat-card class="task-item-card">
+            <mat-card-header>
+              <mat-card-title>{{ task.title }}</mat-card-title>
+              <div class="spacer"></div>
+              <div class="task-actions">
+                <button mat-icon-button color="primary" (click)="onEditTask(task)">
+                  <span class="material-symbols-outlined">
+                    edit
+                  </span>
+                </button>
+                <button mat-icon-button color="primary" (click)="onDeleteTask(task.id)">
+                  <span class="material-symbols-outlined">
+                    delete
+                  </span>
+                </button>
+              </div>
+            </mat-card-header>
+            <mat-card-content>
+              <p class="task-description">{{task.description}}</p>
+              <div class="task-date">
+                <span class="material-symbols-outlined">date_range</span>
+                <p [style.text-align]="'end'">{{ task.createdAt | date: 'd MMMM' }}</p>
+              </div>
+            </mat-card-content>
+            <mat-card-actions>
+              <div class="task-status"><span>Pendiente</span></div>
+              <mat-slide-toggle [checked]="task.completed" color="primary"
+                (change)="onToggleCompleted(task)"></mat-slide-toggle>
+            </mat-card-actions>
+          </mat-card>
+        </mat-list-item>
+        }
+      </mat-list>
+      }
+    </mat-card-content>
+  </mat-card>
+
+  <mat-card class="tasks-card">
+    <mat-card-header>
+      <mat-card-title>Tareas Completadas</mat-card-title>
+    </mat-card-header>
+    <mat-card-content>
+      @if (completedTasks().length === 0) {
+      <p class="no-tasks">No hay tareas completadas.</p>
+      } @else {
+      <mat-list>
+        @for (task of completedTasks(); track task.id) {
+        <mat-list-item>
+          <mat-card class="task-item-card">
+            <mat-card-header>
+              <mat-card-title>{{ task.title }}</mat-card-title>
+            </mat-card-header>
+            <mat-card-content>
+              <p class="task-description">{{task.description}}</p>
+              <div class="task-date">
+                <span class="material-symbols-outlined">date_range</span>
+                <p [style.text-align]="'end'">{{ task.createdAt | date: 'd MMMM' }}</p>
+              </div>
+            </mat-card-content>
+            <mat-card-actions>
+              <div class="task-status" [class.completed-task]="task.completed"><span>Completada</span></div>
+              <mat-slide-toggle [checked]="task.completed" color="primary"
+                (change)="onToggleCompleted(task)"></mat-slide-toggle>
+            </mat-card-actions>
+          </mat-card>
+        </mat-list-item>
+        }
+      </mat-list>
+      }
+    </mat-card-content>
+  </mat-card>
+</div>

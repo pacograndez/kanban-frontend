@@ -1,1 +1,33 @@
 /* You can add global styles to this file, and also import other style files */
+
+html, body { 
+    // height: 100%; 
+}
+body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+
+
+:root {
+    --mdc-list-list-item-one-line-container-height: auto;
+    --mdc-switch-selected-track-color: #188544;
+    --mdc-switch-selected-pressed-track-color: #188544;
+    --mdc-switch-selected-focus-track-color: #188544;
+    --mdc-switch-selected-hover-track-color: #188544;
+    --mat-toolbar-title-text-size: 32px;
+    --mat-toolbar-title-text-weight: 700;
+}
+
+.mdc-list-item__content {
+    white-space: normal !important;
+    
+    .mdc-list-item__primary-text {
+        white-space: normal !important;
+    }
+}
+
+textarea[matInput] {
+  resize: none;
+}
+
+.spacer {
+    flex: 1 1 auto;
+}

@@ -1,0 +1,28 @@
+<h2 mat-dialog-title>{{ data ? 'Editar Tarea' : 'Agregar Tarea' }}</h2>
+<mat-dialog-content>
+  <form [formGroup]="taskForm" (ngSubmit)="onSave()">
+    <mat-form-field appearance="fill">
+      <mat-label>Título</mat-label>
+      <input matInput formControlName="title">
+      @if (taskForm.get('title')?.invalid) {
+        <mat-error>El título es obligatorio.</mat-error>
+      }
+    </mat-form-field>
+
+    <mat-form-field appearance="fill">
+      <mat-label>Descripción</mat-label>
+      <textarea matInput rows="5" formControlName="description"></textarea>
+    </mat-form-field>
+    
+    <div class="form-actions">
+      <button mat-stroked-button (click)="onCancel()" type="button">
+        <mat-icon>cancel</mat-icon>
+        Cancelar
+      </button>
+      <button mat-flat-button type="submit" [disabled]="taskForm.invalid">
+        <mat-icon>save</mat-icon>
+        Guardar
+      </button>
+    </div>
+  </form>
+</mat-dialog-content>
