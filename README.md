@@ -1,59 +1,77 @@
-# KanbanFrontend
+# Frontend de la Aplicación de Tareas (To-Do App)
 
-This project was generated using [Angular CLI](https://github.com/angular/angular-cli) version 19.2.16.
+Este repositorio contiene el código fuente del frontend para la aplicación de lista de tareas. Está construido con Angular (v19) y diseñado para consumir el backend basado en Firebase Cloud Functions.
 
-## Development server
+## Stack Tecnológico
+- Framework: Angular
 
-To start a local development server, run:
+- Lenguaje: TypeScript
 
-```bash
-ng serve
-```
+- Componentes de UI: Angular Material (con el tema preconstruido azure-blue) y Angular CDK.
 
-Once the server is running, open your browser and navigate to `http://localhost:4200/`. The application will automatically reload whenever you modify any of the source files.
+- Comunicación con Firebase: AngularFire para una integración fluida con los servicios de Firebase (Auth y Firestore).
 
-## Code scaffolding
+- Programación Reactiva: RxJS para el manejo de operaciones asíncronas y eventos.
 
-Angular CLI includes powerful code scaffolding tools. To generate a new component, run:
+## Configuración del Entorno de Desarrollo
+Sigue estos pasos para configurar y ejecutar el proyecto en tu máquina local.
 
-```bash
-ng generate component component-name
-```
+### Prerrequisitos
+- Node.js (versión 18 o superior)
 
-For a complete list of available schematics (such as `components`, `directives`, or `pipes`), run:
+- Angular CLI (npm install -g @angular/cli)
 
-```bash
-ng generate --help
-```
-
-## Building
-
-To build the project run:
+### Pasos de Instalación
+1. Clonar el Repositorio:
 
 ```bash
-ng build
+git clone <URL_DEL_REPOSITORIO_FRONTEND>
+cd kanban-frontend
 ```
 
-This will compile your project and store the build artifacts in the `dist/` directory. By default, the production build optimizes your application for performance and speed.
-
-## Running unit tests
-
-To execute unit tests with the [Karma](https://karma-runner.github.io) test runner, use the following command:
+2. Instalar Dependencias:
 
 ```bash
-ng test
+npm install
 ```
 
-## Running end-to-end tests
+3. Configuración de Entorno (¡MUY IMPORTANTE!):
+El frontend necesita saber a qué API conectarse. Esta configuración se gestiona en los archivos de entorno de Angular.
 
-For end-to-end (e2e) testing, run:
+Para producción (apuntando al backend desplegado):
+Modifica el archivo src/environments/environment.ts. Este es el archivo base.
 
 ```bash
-ng e2e
+export const environment = {
+  emulators: true,
+  // Reemplaza esta URL con la URL de tu función desplegada (la que termina en .a.run.app)
+  apiUrl: '[https://api-ph72znidmq-uc.a.run.app/api](https://api-ph72znidmq-uc.a.run.app/api)'
+};
 ```
 
-Angular CLI does not come with an end-to-end testing framework by default. You can choose one that suits your needs.
+Para desarrollo local (apuntando a los emuladores):
+Modifica el archivo src/environments/environment.dev.ts. Este archivo reemplaza al anterior cuando ejecutas ng serve.
 
-## Additional Resources
+```bash
+export const environment = {
+  emulators: false,
+  apiUrl: '[http://127.0.0.1:5001/](http://127.0.0.1:5001/)[TU_ID_DE_PROYECTO]/api'
+};
+```
 
-For more information on using the Angular CLI, including detailed command references, visit the [Angular CLI Overview and Command Reference](https://angular.dev/tools/cli) page.
+Reemplaza [TU_ID_DE_PROYECTO] con el ID de tu proyecto de Firebase.
+
+## Scripts Disponibles
+Estos son los comandos principales definidos en package.json para gestionar la aplicación.
+
+- npm start:
+Inicia el servidor de desarrollo en http://localhost:4200/. La aplicación se recargará automáticamente si cambias alguno de los archivos fuente.
+
+- npm run build:
+Compila la aplicación para desarrollo. Los artefactos de la compilación se guardarán en el directorio dist/.
+
+- npm run build-prd:
+Compila la aplicación para producción. Este es el comando que debes usar para generar los archivos que se desplegarán en un servidor como Netlify.
+
+- npm run watch:
+Ejecuta una compilación en modo de vigilancia, recompilando automáticamente los archivos cuando se detectan cambios.
