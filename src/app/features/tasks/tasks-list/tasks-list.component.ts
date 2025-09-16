@@ -87,7 +87,7 @@ export class TasksListComponent implements OnInit, OnDestroy {
       data: null // Pasamos null para el modo de creación
     });
 
-    dialogRef.afterClosed().subscribe(result => {
+    dialogRef.afterClosed().pipe(takeUntil(this.unsubscribe$)).subscribe(result => {
       if (result) {
         this.tasksApi.addTask(result).pipe(takeUntil(this.unsubscribe$)).subscribe(createdTask => {
           this.tasks.update(tasks => [...tasks, createdTask]);
@@ -108,7 +108,7 @@ export class TasksListComponent implements OnInit, OnDestroy {
       data: task // Pasamos la tarea para el modo de edición
     });
     
-    dialogRef.afterClosed().subscribe(result => {
+    dialogRef.afterClosed().pipe(takeUntil(this.unsubscribe$)).subscribe(result => {
       if (result) {
         this.tasksApi.updateTask(result.id, result).pipe(takeUntil(this.unsubscribe$)).subscribe(updatedTask => {
           this.tasks.update(tasks => tasks.map(t => (t.id === updatedTask.id ? updatedTask : t)));
@@ -119,7 +119,7 @@ export class TasksListComponent implements OnInit, OnDestroy {
 
   public onToggleCompleted(task: Task): void {
     const updatedTask = { ...task, completed: !task.completed };
-    this.tasksApi.updateTask(task.id, { completed: updatedTask.completed }).subscribe(result => {
+    this.tasksApi.updateTask(task.id, { completed: updatedTask.completed }).pipe(takeUntil(this.unsubscribe$)).subscribe(result => {
       // Reemplaza la tarea modificada en la señal
       this.tasks.update(tasks => tasks.map(t => (t.id === result.id ? result : t)));
     });
